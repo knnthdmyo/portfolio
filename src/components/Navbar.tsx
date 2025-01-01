@@ -8,7 +8,7 @@ const NavBar: FunctionComponent<NavBarProps> = () => {
       <section className="relative">
         <nav className="flex w-full">
           <div className="md:px-4 px-1 xl:px-12 py-6 flex w-full">
-            <ul className="flex md:px-4 px-1 mx-auto font-semibold font-heading xl:space-x-12 md:space-x-4 items-center">
+            <ul className="flex md:px-4 px-1 mx-auto font-semibold font-heading xl:space-x-12 space-x-4 items-center text-xs ">
               <li>
                 <a className="hover:underline" href="#about-me">
                   About Me
@@ -22,12 +22,17 @@ const NavBar: FunctionComponent<NavBarProps> = () => {
               </li>
               <li>
                 <a className="hover:underline" href="#techonologies">
-                  Technologies
+                  Tech
                 </a>
               </li>
               <li>
                 <a className="hover:underline" href="#projects">
                   Projects
+                </a>
+              </li>
+              <li>
+                <a className="hover:underline" href="#reach-out">
+                  Connect
                 </a>
               </li>
             </ul>
