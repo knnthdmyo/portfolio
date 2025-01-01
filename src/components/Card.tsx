@@ -1,21 +1,24 @@
-interface CardProps {
+interface ImageCardProps {
   children?: React.ReactNode;
   title?: string;
   description?: string;
+  imageSource?: string;
 }
 
-const Card = ({ title, description, children }: CardProps) => {
+const ImageCard = ({ imageSource, description, title }: ImageCardProps) => {
   return (
-    <div className="relative flex flex-col my-6 bg-white shadow-md box-border p-2  rounded-lg min-w-32">
-      <div className="relative overflow-hidden rounded-md">{children}</div>
-      <div className="p-4">
-        <h6 className="mb-2 text-slate-800 text-xl font-semibold">{title}</h6>
-        <p className="text-slate-600 leading-normal font-light overflow-auto h-38">
-          {description}
-        </p>
+    <div className="bg-white rounded-lg overflow-hidden mb-10">
+      <img src={imageSource} alt="image" className="w-full" />
+      <div className="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
+        <h3>
+          <h1 className="font-semibold text-dark text-xl sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px] mb-4 block hover:text-primary ">
+            {title}
+          </h1>
+        </h3>
+        <p className="text-base leading-relaxed mb-7">{description}</p>
       </div>
     </div>
   );
 };
 
-export default Card;
+export default ImageCard;
