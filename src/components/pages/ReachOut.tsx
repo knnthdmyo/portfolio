@@ -1,11 +1,8 @@
-import { CONTACT, SOCIAL_NETWORKS } from "@/assets/data/dummy";
-import LaptopPhone from "@assets/images/laptop-phone.jpg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FunctionComponent } from "react";
+import { CONTACT, SOCIAL_NETWORKS } from '@/assets/data/dummy';
+import LaptopPhone from '@assets/images/laptop-phone.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface ReachOutProps {}
-
-const ReachOut: FunctionComponent<ReachOutProps> = () => {
+const ReachOut = () => {
   return (
     <div className="box-border md:p-20 p-8 flex flex-col lg:flex-row lg:items-center   gap-4 bg-zinc-900 text-white">
       <div className="lg:w-1/2 box-border md:p-0 p-8 lg:block hidden">
@@ -23,14 +20,14 @@ const ReachOut: FunctionComponent<ReachOutProps> = () => {
         ))}
         <h1>Connect with me: </h1>
         <div className="flex gap-4">
-          {" "}
-          {SOCIAL_NETWORKS.map((socialNetwork) => (
+          {' '}
+          {SOCIAL_NETWORKS.map((socialNetwork, index) => (
             <a
               className="pointer text-2xl"
               href={socialNetwork.link}
               target="_blank"
               rel="noreferrer"
-              key={socialNetwork.title}
+              key={index}
             >
               <FontAwesomeIcon icon={socialNetwork.icon} />
             </a>

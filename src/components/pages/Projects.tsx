@@ -1,10 +1,8 @@
-import { PROJECTS } from "@/assets/data/dummy";
-import { FunctionComponent } from "react";
-import Card from "../Card";
+import { PROJECTS } from '@/assets/data/dummy';
 
-interface ProjectsProps {}
+import Card from '../Card';
 
-const Projects: FunctionComponent<ProjectsProps> = () => {
+const Projects = () => {
   return (
     <div className="box-border md:p-20 p-8 flex flex-col justify-between gap-4 bg-zinc-800 text-white">
       <div className="flex flex-col md:gap-12 lg:pr-20">
@@ -12,8 +10,12 @@ const Projects: FunctionComponent<ProjectsProps> = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4">
-        {PROJECTS.map((project) => (
-          <Card title={project.title} description={project.description}>
+        {PROJECTS.map((project, index) => (
+          <Card
+            key={index}
+            title={project.title}
+            description={project.description}
+          >
             <img src={project.image} alt={project.title} />
           </Card>
         ))}

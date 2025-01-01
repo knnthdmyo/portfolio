@@ -1,8 +1,4 @@
-import { FunctionComponent } from "react";
-
-interface NavBarProps {}
-
-const NavBar: FunctionComponent<NavBarProps> = () => {
+const NavBar = () => {
   return (
     <div className="sm:flex w-full lg:justify-end sm:justify-center">
       <section className="relative">
