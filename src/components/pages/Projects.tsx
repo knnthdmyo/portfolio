@@ -1,6 +1,6 @@
 import { PROJECTS } from '@/assets/data/dummy';
 
-import ImageCard from '../Card';
+import ImageCard from '../ImageCard';
 
 const Projects = () => {
   return (
