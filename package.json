@@ -1,9 +1,9 @@
 {
-  "name": "knnthdmyo.github.io",
+  "name": "knnthdmyo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://knnthdmyo.github.io/knnthdmyo.github.io",
+  "homepage": "https://knnthdmyo.github.io/knnthdmyo",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
