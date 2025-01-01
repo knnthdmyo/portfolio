@@ -1,12 +1,13 @@
-import Hero from "@components/pages/Hero";
 import AboutMe from "@components/pages/AboutMe";
+import Hero from "@components/pages/Hero";
 import Experiences from "./components/pages/Experiences";
-import Technologies from "./components/pages/Technologies";
 import Projects from "./components/pages/Projects";
+import ReachOut from "./components/pages/ReachOut";
+import Technologies from "./components/pages/Technologies";
 
 function App() {
   return (
-    <div>
+    <div className="dark:bg-gray-900 dark:text-white transition-all">
       <section id="home">
         <Hero />
       </section>
@@ -21,6 +22,9 @@ function App() {
       </section>
       <section id="projects">
         <Projects />
+      </section>
+      <section id="reach-out">
+        <ReachOut />
       </section>
     </div>
   );

@@ -13,10 +13,12 @@ const Technologies: FunctionComponent<TechnologiesProps> = () => {
       </div>
 
       <div className="box-border xl:p-5 p-8 flex flex-wrap gap-2">
-      {Object.values(TECHNOLOGIES).flat().map((techonology) => (
-          <Tag name={techonology} />
-        ))}
-        </div>
+        {Object.values(TECHNOLOGIES)
+          .flat()
+          .map((techonology) => (
+            <Tag name={techonology} />
+          ))}
+      </div>
     </div>
   );
 };

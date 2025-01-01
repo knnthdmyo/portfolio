@@ -1,11 +1,11 @@
-import { FunctionComponent } from "react";
 import CoffeeLaptop from "@assets/images/laptop-coffee.jpg";
+import { FunctionComponent } from "react";
 
 interface AboutMeProps {}
 
 const AboutMe: FunctionComponent<AboutMeProps> = () => {
   return (
-    <div className="box-border md:p-20 p-8 flex flex-col md:flex-row items-center justify-center gap-4 bg-[#b4b0ab]">\
+    <div className="box-border md:p-20 p-8 flex flex-col md:flex-row items-center justify-center gap-4 bg-beige-500">
       <div className="lg:w-1/2 flex flex-col md:gap-9 lg:pr-20">
         <h1 className="md:text-7xl text-4xl">About Me</h1>
         <p>
