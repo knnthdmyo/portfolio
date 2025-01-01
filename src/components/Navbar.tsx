@@ -10,15 +10,9 @@ const NavBar = () => {
                   About Me
                 </a>
               </li>
-
               <li>
                 <a className="hover:underline" href="#experiences">
                   Experiences
-                </a>
-              </li>
-              <li>
-                <a className="hover:underline" href="#techonologies">
-                  Tech
                 </a>
               </li>
               <li>

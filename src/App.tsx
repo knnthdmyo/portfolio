@@ -1,9 +1,8 @@
-import AboutMe from "@components/pages/AboutMe";
-import Hero from "@components/pages/Hero";
-import Experiences from "./components/pages/Experiences";
-import Projects from "./components/pages/Projects";
-import ReachOut from "./components/pages/ReachOut";
-import Technologies from "./components/pages/Technologies";
+import AboutMe from '@components/pages/AboutMe';
+import Hero from '@components/pages/Hero';
+import Experiences from './components/pages/Experiences';
+import Projects from './components/pages/Projects';
+import ReachOut from './components/pages/ReachOut';
 
 function App() {
   return (
@@ -16,9 +15,6 @@ function App() {
       </section>
       <section id="experiences">
         <Experiences />
-      </section>
-      <section id="techonologies">
-        <Technologies />
       </section>
       <section id="projects">
         <Projects />
