@@ -56,12 +56,7 @@ export const TECHNOLOGIES = {
 };
 
 export const PROJECTS = [
-  {
-    image: IMG_XtendOps,
-    title: "Performativ",
-    description:
-      "A wealth management platform designed to streamline client reporting tasks for finance professionals. ",
-  },
+  
   {
     image: IMG_XtendOps,
     title: "XtendOps",
@@ -73,6 +68,11 @@ export const PROJECTS = [
     title: "Labstar",
     description:
       "Cloud-based lab management software to help run a dental lab from case entry to invoice, with powerful features to manage clients, sales, logistics, digital files, reporting, and billing, enabling clients organizes all the moving parts of a lab's business and helping improve client management.",
+  },
+  {
+    title: "Performativ",
+    description:
+      "A wealth management platform designed to streamline client reporting tasks for finance professionals. ",
   },
 ];
 

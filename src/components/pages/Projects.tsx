@@ -15,7 +15,7 @@ const Projects = () => {
             key={index}
             title={project.title}
             description={project.description}
-            imageSource={project.image}
+            imageSource={project?.image}
           />
         ))}
       </div>
