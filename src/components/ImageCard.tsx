@@ -12,13 +12,9 @@ const ImageCard = ({ imageSource, description, title }: ImageCardProps) => {
   return (
     <div className="bg-white rounded-lg overflow-hidden mb-10">
       {imageSource ? (
-        <img
-          src={imageSource}
-          alt="image"
-          className="w-full xl:h-48 sm:h-72 h-32"
-        />
+        <img src={imageSource} alt="image" className="w-full xl:h-48" />
       ) : (
-        <div className="xl:h-48 sm:h-72 h-32 flex flex-col justify-center items-center text-gray-400">
+        <div className="xl:h-48 h-60 flex flex-col justify-center items-center text-gray-400">
           <FontAwesomeIcon icon={faFileCircleExclamation} />
           File not found
         </div>

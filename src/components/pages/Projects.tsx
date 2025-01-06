@@ -9,7 +9,7 @@ const Projects = () => {
         <h1 className="md:text-7xl text-4xl text-white">Projects</h1>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 xl:grid-cols-3 xl:gap-8 2xl:gap-20 gap-4">
         {PROJECTS.map((project, index) => (
           <ImageCard
             key={index}
