@@ -1,6 +1,6 @@
 const NavBar = () => {
   return (
-    <div className="sm:flex w-full lg:justify-end sm:justify-center">
+    <div className="sm:flex w-full lg:justify-start sm:justify-center">
       <section className="relative">
         <nav className="flex w-full">
           <div className="md:px-4 px-1 xl:px-12 py-6 flex w-full">

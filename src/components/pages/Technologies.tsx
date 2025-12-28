@@ -8,7 +8,7 @@ const Technologies = () => {
         {Object.values(TECHNOLOGIES)
           .flat()
           .map((techonology, index) => (
-            <Tag name={techonology} key={index} />
+            <Tag name={techonology.name} key={index} color={techonology.color} icon={techonology.icon} link={techonology.link} />
           ))}
       </div>
     </div>
