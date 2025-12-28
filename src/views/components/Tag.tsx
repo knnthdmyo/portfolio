@@ -36,3 +36,4 @@ const Tag: FunctionComponent<TagProps> = ({ name, icon, link, color }) => {
 };
 
 export default Tag;
+

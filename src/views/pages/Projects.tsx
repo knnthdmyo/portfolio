@@ -1,0 +1,124 @@
+import { useState } from 'react';
+import { useProjects } from '@/viewmodels';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
+const Projects = () => {
+  const { projects } = useProjects();
+  const [expandedProject, setExpandedProject] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
+
+  const toggleProject = (index: number) => {
+    if (!showAll) {
+      setExpandedProject(expandedProject === index ? null : index);
+    }
+  };
+
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+    setExpandedProject(null);
+  };
+
+  return (
+    <div className="box-border md:py-20 py-12 flex flex-col gap-8 md:gap-12">
+      {/* Header */}
+      <div className="group/header px-8 md:px-20">
+        <div className="flex items-end gap-4">
+          <div>
+            <span className="text-sm uppercase tracking-widest text-sky-500 font-medium">Portfolio</span>
+            <h1 className="md:text-6xl text-4xl font-light tracking-tight text-gray-800 dark:text-gray-200">Projects</h1>
+          </div>
+          
+          {/* See All Button - visible on header hover */}
+          <button
+            onClick={toggleShowAll}
+            className="hidden md:flex items-center gap-2 text-xs text-gray-400 hover:text-sky-500 transition-all duration-300 mb-2 opacity-0 group-hover/header:opacity-100 -translate-x-2 group-hover/header:translate-x-0"
+          >
+            <span>{showAll ? 'Collapse' : 'Expand All'}</span>
+            <FontAwesomeIcon 
+              icon={faChevronDown} 
+              className={`text-[10px] transition-transform duration-300 ${showAll ? 'rotate-180' : 'rotate-0'}`} 
+            />
+          </button>
+        </div>
+        <div className="flex items-center gap-3 mt-3">
+          <div className="w-12 h-0.5 bg-gradient-to-r from-violet-400 to-sky-400" />
+          <p className="text-xs text-gray-400">{projects.length} featured projects</p>
+        </div>
+      </div>
+
+      {/* Projects List */}
+      <div className="flex flex-col gap-8 px-8 md:px-20">
+        {projects.map((project, index) => (
+          <div
+            key={index}
+            className="opacity-0 translate-y-4 animate-[slideUp_0.5s_ease-out_forwards]"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            {/* Project Row */}
+            <div
+              className={`group flex flex-col md:flex-row gap-6 md:gap-10 ${showAll ? '' : 'cursor-pointer'}`}
+              onClick={() => toggleProject(index)}
+            >
+              {/* Index number */}
+              <div className="flex-shrink-0">
+                <span className="text-5xl md:text-6xl font-extralight text-gray-200 dark:text-gray-800 group-hover:text-sky-500/30 transition-colors duration-300">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-xl md:text-2xl font-light tracking-wide text-gray-800 dark:text-gray-100 group-hover:text-sky-500 transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  {/* Expand arrow - only visible on hover, hidden when showAll */}
+                  {!showAll && (
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      className={`text-xs text-gray-400 transition-all duration-300 opacity-0 group-hover:opacity-100 ${
+                        expandedProject === index ? 'rotate-180' : ''
+                      }`}
+                    />
+                  )}
+                </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 leading-relaxed max-w-2xl">
+                  {project.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Expanded Image Section */}
+            <div
+              className={`overflow-hidden transition-all duration-500 ease-out ${
+                showAll || expandedProject === index ? 'max-h-96 opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'
+              }`}
+              style={{ transitionDelay: showAll ? `${index * 100}ms` : '0ms' }}
+            >
+              <div className="md:ml-[88px] rounded-xl overflow-hidden">
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full max-w-2xl h-64 md:h-80 object-cover rounded-xl"
+                  />
+                ) : (
+                  <div className="w-full max-w-2xl h-64 md:h-80 flex flex-col items-center justify-center gap-3 text-gray-500 bg-gray-100 dark:bg-gray-800/30 rounded-xl">
+                    <FontAwesomeIcon icon={faImage} className="text-4xl" />
+                    <span className="text-xs uppercase tracking-wider">No preview available</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Subtle divider */}
+            <div className="w-full h-px bg-gradient-to-r from-gray-200 dark:from-gray-800 via-gray-200 dark:via-gray-700 to-transparent mt-6" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Projects;

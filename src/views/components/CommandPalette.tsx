@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faXmark, faBriefcase, faCode, faFolder, faEnvelope, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { EXPERIENCES, PROJECTS, TECHNOLOGIES, CONTACT } from '@/assets/data/dummy';
+import { ExperienceService, ProjectService, TechnologyService, ContactService } from '@/services';
 
 interface SearchResult {
   type: 'experience' | 'project' | 'technology' | 'contact' | 'section';
@@ -23,11 +23,13 @@ const CommandPalette = () => {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Build searchable data
   const searchableData = useMemo(() => {
     const data: SearchResult[] = [];
+    const experiences = ExperienceService.getExperiences();
+    const projects = ProjectService.getProjects();
+    const technologies = TechnologyService.getAll();
+    const contactInfo = ContactService.getContactInfo();
 
-    // Add sections
     SECTIONS.forEach(section => {
       data.push({
         type: 'section',
@@ -37,8 +39,7 @@ const CommandPalette = () => {
       });
     });
 
-    // Add experiences
-    EXPERIENCES.forEach(exp => {
+    experiences.forEach(exp => {
       data.push({
         type: 'experience',
         title: `${exp.role} at ${exp.company}`,
@@ -47,8 +48,7 @@ const CommandPalette = () => {
       });
     });
 
-    // Add projects
-    PROJECTS.forEach(project => {
+    projects.forEach(project => {
       data.push({
         type: 'project',
         title: project.title,
@@ -57,8 +57,7 @@ const CommandPalette = () => {
       });
     });
 
-    // Add technologies
-    Object.values(TECHNOLOGIES).flat().forEach(tech => {
+    Object.values(technologies).flat().forEach(tech => {
       data.push({
         type: 'technology',
         title: tech.name,
@@ -67,8 +66,7 @@ const CommandPalette = () => {
       });
     });
 
-    // Add contact
-    CONTACT.forEach(contact => {
+    contactInfo.forEach(contact => {
       data.push({
         type: 'contact',
         title: contact.title,
@@ -80,10 +78,8 @@ const CommandPalette = () => {
     return data;
   }, []);
 
-  // Filter results based on query
   const results = useMemo(() => {
     if (!query.trim()) {
-      // Show sections by default
       return searchableData.filter(item => item.type === 'section');
     }
 
@@ -94,33 +90,34 @@ const CommandPalette = () => {
     ).slice(0, 8);
   }, [query, searchableData]);
 
-  // Generate AI-like response
   const aiResponse = useMemo(() => {
     if (!query.trim()) return null;
 
     const lowerQuery = query.toLowerCase();
+    const experiences = ExperienceService.getExperiences();
+    const projects = ProjectService.getProjects();
+    const technologies = TechnologyService.getAll();
+    const email = ContactService.getEmail();
 
-    // Check for specific questions
     if (lowerQuery.includes('experience') || lowerQuery.includes('work') || lowerQuery.includes('job')) {
-      return `I have ${EXPERIENCES.length} professional experiences, including roles at ${EXPERIENCES.map(e => e.company).join(', ')}. My most recent role was as ${EXPERIENCES[0].role} at ${EXPERIENCES[0].company}.`;
+      return `I have ${experiences.length} professional experiences, including roles at ${experiences.map(e => e.company).join(', ')}. My most recent role was as ${experiences[experiences.length - 1].role} at ${experiences[experiences.length - 1].company}.`;
     }
 
     if (lowerQuery.includes('project') || lowerQuery.includes('portfolio')) {
-      return `I've worked on ${PROJECTS.length} notable projects: ${PROJECTS.map(p => p.title).join(', ')}. Each showcases different aspects of my development skills.`;
+      return `I've worked on ${projects.length} notable projects: ${projects.map(p => p.title).join(', ')}. Each showcases different aspects of my development skills.`;
     }
 
     if (lowerQuery.includes('skill') || lowerQuery.includes('tech') || lowerQuery.includes('stack')) {
-      const allTech = Object.values(TECHNOLOGIES).flat();
+      const allTech = Object.values(technologies).flat();
       return `I'm proficient in ${allTech.length}+ technologies including ${allTech.slice(0, 5).map(t => t.name).join(', ')}, and more.`;
     }
 
     if (lowerQuery.includes('contact') || lowerQuery.includes('email') || lowerQuery.includes('reach')) {
-      const email = CONTACT.find(c => c.title === 'Email');
-      return `You can reach me at ${email?.value}. I'm always open to new opportunities and collaborations!`;
+      return `You can reach me at ${email}. I'm always open to new opportunities and collaborations!`;
     }
 
     if (lowerQuery.includes('react') || lowerQuery.includes('frontend')) {
-      return `Yes! React is one of my primary skills. I've used it extensively at ${EXPERIENCES[0].company} and in projects like ${PROJECTS[0].title}.`;
+      return `Yes! React is one of my primary skills. I've used it extensively at ${experiences[experiences.length - 1].company} and in projects like ${projects[0].title}.`;
     }
 
     if (results.length > 0) {
@@ -130,7 +127,6 @@ const CommandPalette = () => {
     return `I couldn't find specific information about "${query}", but feel free to explore the sections below or contact me directly!`;
   }, [query, results]);
 
-  // Keyboard navigation
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (!isOpen) return;
 
@@ -155,7 +151,6 @@ const CommandPalette = () => {
     }
   }, [isOpen, results, selectedIndex]);
 
-  // Global keyboard shortcut
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -175,7 +170,6 @@ const CommandPalette = () => {
     };
   }, [handleKeyDown]);
 
-  // Reset selected index when results change
   useEffect(() => {
     setSelectedIndex(0);
   }, [results]);
@@ -205,15 +199,12 @@ const CommandPalette = () => {
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-start justify-center pt-[15vh]">
-      {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Modal */}
       <div className="relative w-full max-w-2xl mx-4 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-        {/* Search input */}
         <div className="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
           <FontAwesomeIcon icon={faSearch} className="text-gray-400" />
           <input
@@ -232,7 +223,6 @@ const CommandPalette = () => {
           </div>
         </div>
 
-        {/* AI Response */}
         {aiResponse && (
           <div className="p-4 bg-gradient-to-r from-sky-50 to-violet-50 dark:from-sky-900/20 dark:to-violet-900/20 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-start gap-3">
@@ -246,7 +236,6 @@ const CommandPalette = () => {
           </div>
         )}
 
-        {/* Results */}
         <div className="max-h-80 overflow-y-auto">
           {results.length > 0 ? (
             <div className="p-2">
@@ -285,7 +274,6 @@ const CommandPalette = () => {
           )}
         </div>
 
-        {/* Footer */}
         <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
           <div className="flex items-center justify-between text-xs text-gray-500">
             <div className="flex items-center gap-4">
