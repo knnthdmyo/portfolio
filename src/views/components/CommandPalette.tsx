@@ -1,14 +1,15 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faXmark, faBriefcase, faCode, faFolder, faEnvelope, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faXmark, faBriefcase, faCode, faFolder, faEnvelope, faArrowRight, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ExperienceService, ProjectService, TechnologyService, ContactService } from '@/services';
 
 interface SearchResult {
-  type: 'experience' | 'project' | 'technology' | 'contact' | 'section';
+  type: 'experience' | 'project' | 'technology' | 'contact' | 'section' | 'suggestion';
   title: string;
   description: string;
   link?: string;
   section?: string;
+  query?: string;
 }
 
 const SECTIONS = [
@@ -16,6 +17,10 @@ const SECTIONS = [
   { id: 'experiences', title: 'Experiences', description: 'View my career journey' },
   { id: 'projects', title: 'Projects', description: 'Browse my portfolio' },
   { id: 'reach-out', title: 'Contact', description: 'Get in touch with me' },
+];
+
+const QUICK_SUGGESTIONS = [
+  { title: 'About Me', description: 'Learn about my background and expertise', query: 'about me' },
 ];
 
 const CommandPalette = () => {
@@ -80,7 +85,14 @@ const CommandPalette = () => {
 
   const results = useMemo(() => {
     if (!query.trim()) {
-      return searchableData.filter(item => item.type === 'section');
+      const sections = searchableData.filter(item => item.type === 'section');
+      const suggestions = QUICK_SUGGESTIONS.map(s => ({
+        type: 'suggestion' as const,
+        title: s.title,
+        description: s.description,
+        query: s.query,
+      }));
+      return [...suggestions, ...sections];
     }
 
     const lowerQuery = query.toLowerCase();
@@ -98,6 +110,10 @@ const CommandPalette = () => {
     const projects = ProjectService.getProjects();
     const technologies = TechnologyService.getAll();
     const email = ContactService.getEmail();
+
+    if (lowerQuery.includes('about') || lowerQuery.includes('who are') || lowerQuery.includes('introduce') || lowerQuery.includes('summary')) {
+      return `I'm a Frontend Engineer with 6+ years of experience shipping React web apps and React Native mobile experiences. I build fast, accessible interfaces with TypeScript, Redux, and Tailwind—whether it's SaaS dashboards, PWAs that hit the App Store, or cross-platform apps running on iOS and Android. I've led migrations, mentored devs, and kept production systems running smoothly. Currently exploring AI-assisted development to ship even faster.`;
+    }
 
     if (lowerQuery.includes('experience') || lowerQuery.includes('work') || lowerQuery.includes('job')) {
       return `I have ${experiences.length} professional experiences, including roles at ${experiences.map(e => e.company).join(', ')}. My most recent role was as ${experiences[experiences.length - 1].role} at ${experiences[experiences.length - 1].company}.`;
@@ -175,6 +191,11 @@ const CommandPalette = () => {
   }, [results]);
 
   const handleSelect = (result: SearchResult) => {
+    if (result.type === 'suggestion' && result.query) {
+      setQuery(result.query);
+      setSelectedIndex(0);
+      return;
+    }
     if (result.link) {
       window.open(result.link, '_blank');
     } else if (result.section) {
@@ -191,6 +212,7 @@ const CommandPalette = () => {
       case 'project': return faFolder;
       case 'technology': return faCode;
       case 'contact': return faEnvelope;
+      case 'suggestion': return faUser;
       default: return faArrowRight;
     }
   };

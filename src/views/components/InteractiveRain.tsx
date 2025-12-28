@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 
 interface Particle {
   x: number;
@@ -14,11 +14,16 @@ interface Particle {
 }
 
 const CHARS = ['{ }', '<>', '01', '=>', 'fn', '10', '[]', '&&', '::', '**', '()', 'let', '...', '||', 'null'];
-const PARTICLE_COUNT = 12;
+const DEFAULT_PARTICLE_COUNT = 12;
 const PICKUP_RADIUS = 80;
 const ATTRACTION_STRENGTH = 0.15;
 
-const InteractiveRain = () => {
+interface InteractiveRainProps {
+  particleCount?: number;
+}
+
+const InteractiveRain = ({ particleCount: propParticleCount }: InteractiveRainProps) => {
+  const [particleCount, setParticleCount] = useState(propParticleCount ?? DEFAULT_PARTICLE_COUNT);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: -1000, y: -1000 });
@@ -44,8 +49,8 @@ const InteractiveRain = () => {
   }, []);
 
   const initParticles = useCallback(() => {
-    particlesRef.current = Array.from({ length: PARTICLE_COUNT }, () => createParticle());
-  }, [createParticle]);
+    particlesRef.current = Array.from({ length: particleCount }, () => createParticle());
+  }, [createParticle, particleCount]);
 
   const updateParticles = useCallback(() => {
     const canvas = canvasRef.current;
@@ -131,6 +136,25 @@ const InteractiveRain = () => {
     animationRef.current = requestAnimationFrame(updateParticles);
   }, [createParticle]);
 
+  // Listen for settings changes
+  useEffect(() => {
+    const handleSettingsChange = (e: CustomEvent<{ particleCount: number }>) => {
+      setParticleCount(e.detail.particleCount);
+    };
+
+    window.addEventListener('cursorSettingsChanged', handleSettingsChange as EventListener);
+    return () => {
+      window.removeEventListener('cursorSettingsChanged', handleSettingsChange as EventListener);
+    };
+  }, []);
+
+  // Update from props
+  useEffect(() => {
+    if (propParticleCount !== undefined) {
+      setParticleCount(propParticleCount);
+    }
+  }, [propParticleCount]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -167,8 +191,12 @@ const InteractiveRain = () => {
     };
   }, [initParticles, updateParticles]);
 
-  // Don't render on touch devices
+  // Don't render on touch devices or if particle count is 0
   if (typeof window !== 'undefined' && 'ontouchstart' in window) {
+    return null;
+  }
+
+  if (particleCount === 0) {
     return null;
   }
 

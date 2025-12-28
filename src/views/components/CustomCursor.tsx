@@ -11,13 +11,17 @@ interface TrailPoint {
 }
 
 const BASE_SIZE = 27;
-const MAX_SIZE = 500;
 const SHAKE_THRESHOLD = 200; // Start shaking and turn red
 const INTENSE_THRESHOLD = 300; // Darker flashing red
 const SIZE_INCREMENT = 6;
 const SHRINK_DELAY = 10000; // 10 seconds before shrinking
 
-const CustomCursor = () => {
+interface CustomCursorProps {
+  growthEnabled?: boolean;
+  maxSize?: number;
+}
+
+const CustomCursor = ({ growthEnabled = true, maxSize = 200 }: CustomCursorProps) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isClicking, setIsClicking] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -97,7 +101,16 @@ const CustomCursor = () => {
     const handleMouseDown = () => {
       setIsClicking(true);
       // Click triggers shrink if cursor is enlarged
-      if (cursorSize > BASE_SIZE) {
+      if (cursorSize >= SHAKE_THRESHOLD) {
+        // Open settings dialog when clicking at warning size
+        window.dispatchEvent(new CustomEvent('openCursorSettings'));
+        setIsShrinking(true);
+        setIsShaking(false);
+        setIsIntense(false);
+        setCursorSize(BASE_SIZE);
+        // Reset shrinking state after animation
+        setTimeout(() => setIsShrinking(false), 500);
+      } else if (cursorSize > BASE_SIZE) {
         setIsShrinking(true);
         setIsShaking(false);
         setIsIntense(false);
@@ -115,9 +128,12 @@ const CustomCursor = () => {
     
     // Handle particle consumption - grow cursor
     const handleParticleConsumed = () => {
+      // Skip growth if disabled
+      if (!growthEnabled) return;
+      
       setIsShrinking(false);
       setCursorSize(prev => {
-        const newSize = Math.min(prev + SIZE_INCREMENT, MAX_SIZE);
+        const newSize = Math.min(prev + SIZE_INCREMENT, maxSize);
         
         // Trigger shake when reaching shake threshold (200px)
         if (newSize >= SHAKE_THRESHOLD && prev < SHAKE_THRESHOLD) {
@@ -130,7 +146,7 @@ const CustomCursor = () => {
         }
         
         // At max size, clear shrink timer - only click can reset
-        if (newSize >= MAX_SIZE) {
+        if (newSize >= maxSize) {
           if (shrinkTimeoutRef.current) {
             clearTimeout(shrinkTimeoutRef.current);
           }
@@ -140,7 +156,7 @@ const CustomCursor = () => {
       });
       
       // Reset shrink timer on each consumption (only if not at max)
-      if (cursorSize < MAX_SIZE - SIZE_INCREMENT) {
+      if (cursorSize < maxSize - SIZE_INCREMENT) {
         if (shrinkTimeoutRef.current) {
           clearTimeout(shrinkTimeoutRef.current);
         }
@@ -183,7 +199,7 @@ const CustomCursor = () => {
         clearTimeout(shrinkTimeoutRef.current);
       }
     };
-  }, [updateTrail, cursorSize]);
+  }, [updateTrail, cursorSize, growthEnabled, maxSize]);
 
   if (typeof window !== 'undefined' && 'ontouchstart' in window) {
     return null;
@@ -196,7 +212,7 @@ const CustomCursor = () => {
         <div
           key={i}
           ref={(el) => { trailElementsRef.current[i] = el; }}
-          className={`fixed pointer-events-none z-[99997] rounded-full will-change-transform transition-opacity duration-200
+          className={`fixed pointer-events-none z-[100001] rounded-full will-change-transform transition-opacity duration-200
             ${isVisible && isMoving && !isShaking ? '' : '!opacity-0'}`}
           style={{
             width: '14px',
@@ -211,7 +227,7 @@ const CustomCursor = () => {
 
       {/* Main cursor arrow */}
       <div
-        className={`fixed pointer-events-none z-[99999] will-change-transform
+        className={`fixed pointer-events-none z-[100002] will-change-transform
           ${isVisible ? 'opacity-100' : 'opacity-0'}
           ${isClicking ? 'scale-75' : 'scale-100'}
           ${isShaking ? 'animate-[shake_0.5s_ease-in-out_infinite]' : ''}

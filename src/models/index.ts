@@ -22,3 +22,9 @@ export type {
   SocialNetwork 
 } from './contact.model';
 
+// Location Models
+export type { 
+  Location, 
+  MapConfig 
+} from './location.model';
+
