@@ -10,20 +10,20 @@ interface ImageCardProps {
 
 const ImageCard = ({ imageSource, description, title }: ImageCardProps) => {
   return (
-    <div className="bg-white rounded-lg overflow-hidden mb-10">
+    <div className="bg-gray-50 dark:bg-slate-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-200 dark:border-slate-600/30 hover:border-sky-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/10 hover:-translate-y-1 group">
       {imageSource ? (
-        <img src={imageSource} alt="image" className="w-full xl:h-48" />
+        <img src={imageSource} alt="project" className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
       ) : (
-        <div className="xl:h-48 h-60 flex flex-col justify-center items-center text-gray-400">
-          <FontAwesomeIcon icon={faFileCircleExclamation} />
-          File not found
+        <div className="h-48 flex flex-col gap-2 justify-center items-center text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-slate-800/50">
+          <FontAwesomeIcon icon={faFileCircleExclamation} className="text-2xl" />
+          <span className="text-xs uppercase tracking-wide">No preview</span>
         </div>
       )}
-      <div className="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
-        <h1 className="font-semibold text-dark text-xl sm:text-[22px] md:text-xl lg:text-[22px] xl:text-xl 2xl:text-[22px] mb-4 block hover:text-primary ">
+      <div className="p-5">
+        <h1 className="font-light text-lg uppercase tracking-tight text-gray-900 dark:text-white mb-2 group-hover:text-sky-500 dark:group-hover:text-sky-400 transition-colors">
           {title}
         </h1>
-        <p className="text-base leading-relaxed mb-7">{description}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">{description}</p>
       </div>
     </div>
   );

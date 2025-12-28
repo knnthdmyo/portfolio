@@ -1,7 +1,6 @@
 import { FunctionComponent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 
 interface TagProps {
   name: string;
@@ -13,17 +12,25 @@ interface TagProps {
 const Tag: FunctionComponent<TagProps> = ({ name, icon, link, color }) => {
   return (
     <a 
-    href={link}
-    target="_blank"
-    rel="noreferrer"
-      className={`text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-2 border-2 bg-white/10 gap-1 rounded-full`} 
-      style={{ borderColor: color, color: color, backgroundColor: `${color}CC` }}
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      className="text-xs inline-flex items-center font-bold leading-sm uppercase px-3 py-2 border-2 gap-1 rounded-full transition-all duration-300 ease-out hover:scale-110 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+      style={{ 
+        borderColor: color, 
+        color: color, 
+        backgroundColor: `${color}CC`,
+        boxShadow: `0 0 0 0 ${color}00`
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = `0 8px 20px -4px ${color}80`;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = `0 0 0 0 ${color}00`;
+      }}
     >
-      <FontAwesomeIcon icon={icon} className="text-white"   />
+      <FontAwesomeIcon icon={icon} className="text-white transition-transform duration-300 group-hover:rotate-12" />
       <span className="text-white">{name}</span>
-      <span className="opacity-70 hover:opacity-100 transition-opacity">
-        <FontAwesomeIcon icon={faExternalLink} className="text-white" />
-      </span>
     </a>
   );
 };

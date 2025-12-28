@@ -2,7 +2,7 @@ import IMG_Labstar from "@/assets/images/labstar.jpg";
 import IMG_XtendOps from "@/assets/images/xo-apply.png";
 import { WorkExperience } from "@/shared/models";
 import { faCss3Alt, faDocker, faFacebook, faGitAlt, faGithub, faInstagram, faJs, faLinkedin, faNodeJs, faReact } from "@fortawesome/free-brands-svg-icons";
-import { faAt, faBook, faChartLine, faCode, faDatabase, faGlobe, faLocationDot, faMobileScreen, faPalette, faServer, faTable, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
+import { faAt, faBook, faChartLine, faClipboardList, faCode, faDatabase, faGlobe, faLocationDot, faMobileScreen, faPalette, faServer, faTable, faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
 
 export const EXPERIENCES: WorkExperience[] = [
   {
@@ -34,46 +34,46 @@ export const LANGUAGES = [
   { name: "C#", color: "#512BD4", icon: faCode, link: "https://docs.microsoft.com/en-us/dotnet/csharp/" },
 ];
 export const FRONTEND_FRAMEWORKS = [
-  { name: "React.Js", color: "#61DAFB", icon: faReact, link: "https://react.dev/" },
-  { name: "Svelte", color: "#FF3E00", icon: faCode, link: "https://svelte.dev/" },
+  { name: "React", color: "#61DAFB", icon: faReact, link: "https://react.dev/" },
+  { name: "React Native", color: "#61DAFB", icon: faMobileScreen, link: "https://reactnative.dev/" },
+  { name: "Expo", color: "#000020", icon: faMobileScreen, link: "https://expo.dev/" },
   { name: "Next.js", color: "#000000", icon: faReact, link: "https://nextjs.org/" },
+  { name: "Svelte", color: "#FF3E00", icon: faCode, link: "https://svelte.dev/" },
   { name: "Vue.js", color: "#42B883", icon: faCode, link: "https://vuejs.org/" },
 ];
 export const BACKEND_FRAMEWORKS = [
   { name: "Node.js", color: "#339933", icon: faNodeJs, link: "https://nodejs.org/" },
   { name: "Express", color: "#000000", icon: faServer, link: "https://expressjs.com/" },
-  { name: "AdonisJS", color: "#5A45FF", icon: faServer, link: "https://adonisjs.com/" },
   { name: "NestJS", color: "#E0234E", icon: faServer, link: "https://nestjs.com/" },
+  { name: "AdonisJS", color: "#5A45FF", icon: faServer, link: "https://adonisjs.com/" },
 ];
 export const DATABASES = [
   { name: "SQL", color: "#00758F", icon: faDatabase, link: "https://www.w3schools.com/sql/" },
+  { name: "MongoDB", color: "#47A248", icon: faDatabase, link: "https://www.mongodb.com/" },
 ];
 export const TOOLS = [
   { name: "Git", color: "#F05032", icon: faGitAlt, link: "https://git-scm.com/" },
   { name: "Docker", color: "#2496ED", icon: faDocker, link: "https://www.docker.com/" },
   { name: "Jest", color: "#C21325", icon: faWandMagicSparkles, link: "https://jestjs.io/" },
   { name: "Storybook", color: "#FF4785", icon: faBook, link: "https://storybook.js.org/" },
-  { name: "Puppeteer", color: "#40B5A2", icon: faCode, link: "https://pptr.dev/" },
   { name: "Figma", color: "#F24E1E", icon: faPalette, link: "https://www.figma.com/" },
+  { name: "Jira", color: "#0052CC", icon: faClipboardList, link: "https://www.atlassian.com/software/jira" },
 ];
 export const LIBRARIES = [
   { name: "Redux", color: "#764ABC", icon: faReact, link: "https://redux.js.org/" },
-  { name: "React Final Form", color: "#61DAFB", icon: faReact, link: "https://final-form.org/react" },
-  { name: "React i18n", color: "#009688", icon: faGlobe, link: "https://react.i18next.com/" },
   { name: "React Query", color: "#FF4154", icon: faReact, link: "https://tanstack.com/query/latest" },
+  { name: "React i18n", color: "#009688", icon: faGlobe, link: "https://react.i18next.com/" },
   { name: "Tailwind CSS", color: "#06B6D4", icon: faCss3Alt, link: "https://tailwindcss.com/" },
-  { name: "Styled Components", color: "#DB7093", icon: faPalette, link: "https://styled-components.com/" },
   { name: "Material UI", color: "#007FFF", icon: faPalette, link: "https://mui.com/" },
-  { name: "Ant Design", color: "#1890FF", icon: faPalette, link: "https://ant.design/" },
   { name: "agGrid", color: "#0084E7", icon: faTable, link: "https://www.ag-grid.com/" },
   { name: "Recharts", color: "#22B5BF", icon: faChartLine, link: "https://recharts.org/" },
-  { name: "PostHog", color: "#4B8BF4", icon: faChartLine, link: "https://posthog.com/" },
 ];
 
 
 export const TECHNOLOGIES = {
   languages: LANGUAGES,
   frontendFrameworks: FRONTEND_FRAMEWORKS,
+  backendFrameworks: BACKEND_FRAMEWORKS,
   databases: DATABASES,
   tools: TOOLS,
   libraries: LIBRARIES,
