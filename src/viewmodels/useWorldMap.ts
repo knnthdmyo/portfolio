@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Location, MapConfig } from '@/models/location.model';
+import { Location } from '@/models/location.model';
 import { LocationService } from '@/services/location.service';
 
 export const useWorldMap = (customLocations?: Location[]) => {
