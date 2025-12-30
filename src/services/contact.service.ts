@@ -3,9 +3,25 @@ import { faFacebook, faGithub, faInstagram, faLinkedin } from "@fortawesome/free
 import { faAt, faLocationDot, faMobileScreen } from "@fortawesome/free-solid-svg-icons";
 
 const CONTACT_DATA: ContactInfo[] = [
-  { title: 'Email', value: 'donkennethgdemayo@gmail.com', icon: faAt },
-  { title: 'Phone', value: '+639761604020', icon: faMobileScreen },
-  { title: 'Location', value: 'Philippines', icon: faLocationDot },
+  { 
+    title: 'Email', 
+    value: 'donkennethgdemayo@gmail.com', 
+    icon: faAt, 
+    type: 'email' 
+  },
+  { 
+    title: 'Phone', 
+    value: '+63 976 160 4020', 
+    icon: faMobileScreen, 
+    type: 'phone' 
+  },
+  { 
+    title: 'Location', 
+    value: 'BGC, Philippines', 
+    icon: faLocationDot, 
+    type: 'location',
+    coordinates: [121.0464, 14.5547] // [longitude, latitude] - Bonifacio Global City
+  },
 ];
 
 const SOCIAL_NETWORKS_DATA: SocialNetwork[] = [

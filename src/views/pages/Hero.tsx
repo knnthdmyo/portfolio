@@ -3,15 +3,13 @@
 import { useHeroStats } from '@/viewmodels';
 import NavBar from '@/views/components/Navbar';
 import WorldMap from '@/views/components/WorldMap';
-import { useCursorSettings } from '@/contexts/CursorSettingsContext';
 
 const Hero = () => {
   const { stats, formatHours } = useHeroStats();
-  const { openDialog } = useCursorSettings();
 
   return (
     <div className="flex flex-col min-h-screen">
-      <NavBar onCursorSettingsClick={openDialog} />
+      <NavBar />
       <div className="flex-1 flex items-center justify-center px-8">
         <div className="text-center max-w-3xl">
           <h1 className="md:text-7xl text-4xl font-light tracking-tight mt-2 text-gray-800 dark:text-gray-200">{`< knnthdmyo />`}</h1>

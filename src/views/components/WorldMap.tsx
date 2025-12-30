@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 import { useWorldMap } from '@/viewmodels/useWorldMap';
 import { Location } from '@/models/location.model';
@@ -9,7 +10,7 @@ interface WorldMapProps {
   title?: string;
 }
 
-const WorldMap = ({ locations: customLocations, title }: WorldMapProps) => {
+const WorldMap = memo(({ locations: customLocations, title }: WorldMapProps) => {
   const { locations, mapConfig, hoveredLocation, handleLocationHover, handleLocationLeave } = useWorldMap(customLocations);
 
   return (
@@ -96,7 +97,9 @@ const WorldMap = ({ locations: customLocations, title }: WorldMapProps) => {
       </div>
     </div>
   );
-};
+});
+
+WorldMap.displayName = 'WorldMap';
 
 export default WorldMap;
 

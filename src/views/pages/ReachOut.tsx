@@ -2,15 +2,87 @@
 
 import { useContact } from '@/viewmodels';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faDownload, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { ContactInfo } from '@/models';
+import { useState } from 'react';
 
 const CV_LINK = 'https://drive.google.com/file/d/1BwI5OSUnxb8c8usowPTB-DQKRDB79RC8/view?usp=sharing';
 
+// Email template
+const createEmailTemplate = () => {
+  const subject = encodeURIComponent('👋 Hello! - Opportunity Inquiry');
+  const body = encodeURIComponent(`Hi Kenneth,
+
+I came across your portfolio at https://knnthdmyo.com/ and I'm impressed with your work!
+
+I'd love to discuss [briefly mention your reason - e.g., "a potential collaboration", "an opportunity at our company", "a project idea"].
+
+Looking forward to connecting!
+
+Best regards,
+[Your Name]
+[Your Company/Role (optional)]
+[Your Contact Information (optional)]`);
+  
+  return { subject, body };
+};
+
 const ReachOut = () => {
   const { contactInfo, socialNetworks, email } = useContact();
+  const [showCopiedToast, setShowCopiedToast] = useState(false);
+
+  const handleContactClick = async (contact: ContactInfo) => {
+    switch (contact.type) {
+      case 'email':
+        // Open email client with template
+        const { subject, body } = createEmailTemplate();
+        window.location.href = `mailto:${contact.value}?subject=${subject}&body=${body}`;
+        break;
+      
+      case 'phone':
+        // Try to open phone app (works on mobile)
+        // Remove spaces for tel: link
+        const phoneNumber = contact.value.replace(/\s/g, '');
+        const telLink = `tel:${phoneNumber}`;
+        const canOpenPhone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        
+        if (canOpenPhone) {
+          window.location.href = telLink;
+        } else {
+          // On desktop, copy to clipboard
+          try {
+            await navigator.clipboard.writeText(contact.value);
+            setShowCopiedToast(true);
+            setTimeout(() => setShowCopiedToast(false), 3000);
+          } catch (err) {
+            console.error('Failed to copy:', err);
+          }
+        }
+        break;
+      
+      case 'location':
+        // Open Google Maps with coordinates
+        if (contact.coordinates) {
+          const [lng, lat] = contact.coordinates;
+          const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+          window.open(mapsUrl, '_blank');
+        }
+        break;
+    }
+  };
 
   return (
-    <div className="box-border flex flex-col">
+    <div className="box-border flex flex-col relative">
+      {/* Copied to Clipboard Toast */}
+      <div
+        className={`fixed top-24 right-8 z-[9999] flex items-center gap-3 px-6 py-3 rounded-full bg-sky-500/90 dark:bg-sky-500/80 backdrop-blur-xl text-white shadow-lg shadow-sky-500/30 border border-sky-400/20 transition-all duration-300 ${
+          showCopiedToast ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'
+        }`}
+      >
+        <FontAwesomeIcon icon={faCheck} className="text-sm" />
+        <span className="text-sm font-medium">Number copied to clipboard!</span>
+      </div>
+
       <div className="md:py-20 py-12 flex flex-col gap-10 md:gap-14">
         {/* Header */}
         <div className="px-8 md:px-20">
@@ -25,9 +97,10 @@ const ReachOut = () => {
         {/* Contact Info */}
         <div className="px-8 md:px-20 flex flex-col gap-4">
           {contactInfo.map((contact, index) => (
-            <div
+            <button
               key={index}
-              className="flex items-center gap-4 group opacity-0 translate-y-4 animate-[slideUp_0.5s_ease-out_forwards]"
+              onClick={() => handleContactClick(contact)}
+              className="flex items-center gap-4 group opacity-0 translate-y-4 animate-[slideUp_0.5s_ease-out_forwards] text-left hover:translate-x-2 transition-all duration-300 cursor-pointer"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <FontAwesomeIcon 
@@ -37,14 +110,14 @@ const ReachOut = () => {
               <span className="text-gray-600 dark:text-gray-300 group-hover:text-sky-500 dark:group-hover:text-sky-400 transition-colors">
                 {contact.value}
               </span>
-            </div>
+            </button>
           ))}
         </div>
 
         {/* Action Buttons */}
         <div className="px-8 md:px-20 flex flex-wrap gap-4">
           <a
-            href={`mailto:${email}?subject=Hello from your portfolio!`}
+            href={`mailto:${email}?subject=${createEmailTemplate().subject}&body=${createEmailTemplate().body}`}
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-sky-500 hover:bg-sky-400 text-white font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-sky-500/30 opacity-0 translate-y-4 animate-[slideUp_0.5s_ease-out_forwards]"
             style={{ animationDelay: '300ms' }}
           >

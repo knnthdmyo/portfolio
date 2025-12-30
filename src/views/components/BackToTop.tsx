@@ -1,34 +1,30 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
-const BackToTop = () => {
+const BackToTop = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(window.scrollY > 300);
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', toggleVisibility);
     };
   }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-  };
+  }, []);
 
   return (
     <button
@@ -51,7 +47,9 @@ const BackToTop = () => {
       <FontAwesomeIcon icon={faArrowUp} className="text-lg" />
     </button>
   );
-};
+});
+
+BackToTop.displayName = 'BackToTop';
 
 export default BackToTop;
 

@@ -1,17 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { faSearch, faBars, faXmark, faDownload, faWandMagicSparkles, faRoute, faBriefcase, faEnvelope, faCode } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBars, faXmark, faDownload, faRoute, faBriefcase, faEnvelope, faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NavBarProps {
   onSearchClick?: () => void;
-  onCursorSettingsClick?: () => void;
 }
 
 const CV_LINK = 'https://drive.google.com/file/d/1BwI5OSUnxb8c8usowPTB-DQKRDB79RC8/view?usp=sharing';
 
-const NavBar = ({ onSearchClick, onCursorSettingsClick }: NavBarProps) => {
+const NavBar = ({ onSearchClick }: NavBarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
 
@@ -96,15 +95,6 @@ const NavBar = ({ onSearchClick, onCursorSettingsClick }: NavBarProps) => {
                     </a>
                   </li>
                 ))}
-                <li className="hidden sm:block">
-                  <button 
-                    onClick={onCursorSettingsClick}
-                    className="flex items-center gap-2 text-gray-500 hover:text-violet-400 transition-colors duration-300"
-                  >
-                    <FontAwesomeIcon icon={faWandMagicSparkles} className="text-xs" />
-                    <span>CURSOR</span>
-                  </button>
-                </li>
                 <li className="hidden sm:block">
                   <a 
                     href={CV_LINK}
@@ -215,20 +205,8 @@ const NavBar = ({ onSearchClick, onCursorSettingsClick }: NavBarProps) => {
                     <span>{link.label}</span>
                   </a>
                 </li>
-              ))}
+                ))}
               <li className="mt-2 pt-2 border-t border-white/5">
-                <button 
-                  onClick={() => {
-                    onCursorSettingsClick?.();
-                    closeMobileMenu();
-                  }}
-                  className="flex items-center gap-3 w-full py-3 px-4 text-sm uppercase tracking-widest font-medium text-violet-400 hover:text-violet-300 hover:bg-violet-500/10 rounded-lg transition-all duration-300"
-                >
-                  <FontAwesomeIcon icon={faWandMagicSparkles} className="text-xs" />
-                  <span>Cursor Settings</span>
-                </button>
-              </li>
-              <li>
                 <a 
                   href={CV_LINK}
                   target="_blank"

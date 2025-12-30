@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { memo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -9,7 +9,7 @@ interface TagProps {
   color: string;
 }
 
-const Tag: FunctionComponent<TagProps> = ({ name, icon, link, color }) => {
+const Tag = memo(({ name, icon, link, color }: TagProps) => {
   return (
     <a 
       href={link}
@@ -33,7 +33,9 @@ const Tag: FunctionComponent<TagProps> = ({ name, icon, link, color }) => {
       <span className="text-white">{name}</span>
     </a>
   );
-};
+});
+
+Tag.displayName = 'Tag';
 
 export default Tag;
 
