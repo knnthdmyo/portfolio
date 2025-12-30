@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useExperiences } from '@/viewmodels';
 import { MilestoneType } from '@/models';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +20,19 @@ const Experiences = () => {
     formatDuration,
   } = useExperiences();
 
+  const [expandedMilestone, setExpandedMilestone] = useState<number | null>(null);
+
+  const toggleMilestone = (index: number) => {
+    if (!showAll) {
+      setExpandedMilestone(expandedMilestone === index ? null : index);
+    }
+  };
+
+  const handleToggleShowAll = () => {
+    toggleShowAll();
+    setExpandedMilestone(null);
+  };
+
   const getIcon = (type: MilestoneType) => {
     switch (type) {
       case 'education': return faGraduationCap;
@@ -38,15 +52,15 @@ const Experiences = () => {
               <h1 className="md:text-6xl text-4xl font-light tracking-tight text-gray-800 dark:text-gray-200">Journey</h1>
             </div>
             
-            {/* See All Button - Desktop only, visible on header hover */}
+            {/* See All Button - Mobile always visible, Desktop on hover */}
             <button
-              onClick={toggleShowAll}
-              className="hidden md:flex items-center gap-2 text-xs text-gray-400 hover:text-sky-500 transition-all duration-300 mb-2 opacity-0 group-hover/header:opacity-100 -translate-x-2 group-hover/header:translate-x-0"
+              onClick={handleToggleShowAll}
+              className="flex items-center gap-2 text-xs text-gray-400 hover:text-sky-500 transition-all duration-300 mb-2 md:opacity-0 md:group-hover/header:opacity-100 md:-translate-x-2 md:group-hover/header:translate-x-0"
             >
-              <span>{showAll ? 'Hide' : 'See All'}</span>
-              <FontAwesomeIcon 
-                icon={faChevronDown} 
-                className={`text-[10px] transition-transform duration-300 ${showAll ? 'rotate-180' : 'rotate-0'}`} 
+              <span>{showAll ? 'Collapse' : 'Expand All'}</span>
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={`text-[10px] transition-transform duration-300 ${showAll ? 'rotate-180' : 'rotate-0'}`}
               />
             </button>
           </div>
@@ -67,6 +81,7 @@ const Experiences = () => {
               {/* Milestones */}
               {milestones.map((milestone, index) => {
                 const isLast = index === milestones.length - 1;
+                const isFirst = index === 0;
                 const gapFlex = getGapFlex(index);
                 
                 return (
@@ -93,9 +108,9 @@ const Experiences = () => {
                       </div>
                       
                       {/* Icon bullet */}
-                      <div className={`relative z-10 w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-2 border-sky-400 flex items-center justify-center text-sky-500 group-hover:bg-sky-50 dark:group-hover:bg-sky-900/30 group-hover:scale-110 transition-all duration-300 ${isLast ? 'animate-[heartbeat_2s_ease-in-out_infinite]' : ''}`}>
+                      <div className={`relative z-10 w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-2 border-sky-400 flex items-center justify-center text-sky-500 group-hover:bg-sky-50 dark:group-hover:bg-sky-900/30 group-hover:scale-110 transition-all duration-300 ${isFirst ? 'animate-[heartbeat_2s_ease-in-out_infinite]' : ''}`}>
                         <FontAwesomeIcon icon={getIcon(milestone.type)} className="text-sm" />
-                        {isLast && <div className="absolute inset-0 rounded-full bg-sky-400/20 animate-ping" />}
+                        {isFirst && <div className="absolute inset-0 rounded-full bg-sky-400/20 animate-ping" />}
                       </div>
                       
                       {/* Label - below (no duration for non-work) */}
@@ -134,6 +149,7 @@ const Experiences = () => {
               <div className="flex flex-col">
                 {milestones.map((milestone, index) => {
                   const isLast = index === milestones.length - 1;
+                  const isFirst = index === 0;
                   const gapFlex = getGapFlex(index);
                   // Scale gap for mobile (min 2rem, proportional to time)
                   const gapHeight = `${Math.max(2, gapFlex * 1.5)}rem`;
@@ -145,40 +161,66 @@ const Experiences = () => {
                       style={{ marginBottom: isLast ? 0 : gapHeight }}
                     >
                       {/* Icon bullet */}
-                      <div className={`relative z-10 w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-2 border-sky-400 flex items-center justify-center text-sky-500 shrink-0 ${isLast ? 'animate-[heartbeat_2s_ease-in-out_infinite]' : ''}`}>
+                      <div className={`relative z-10 w-10 h-10 rounded-full bg-white dark:bg-slate-900 border-2 border-sky-400 flex items-center justify-center text-sky-500 shrink-0 ${isFirst ? 'animate-[heartbeat_2s_ease-in-out_infinite]' : ''}`}>
                         <FontAwesomeIcon icon={getIcon(milestone.type)} className="text-sm" />
-                        {isLast && <div className="absolute inset-0 rounded-full bg-sky-400/20 animate-ping" />}
+                        {isFirst && <div className="absolute inset-0 rounded-full bg-sky-400/20 animate-ping" />}
                       </div>
                       
                       {/* Content */}
                       <div className="flex-1 pb-2">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs font-bold text-sky-500 dark:text-sky-400">
-                            {milestone.type === 'work' 
-                              ? formatDateRange(milestone.startDate, milestone.endDate)
-                              : milestone.startDate.getFullYear()
-                            }
-                          </span>
-                          {milestone.type === 'work' && (
-                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400">
-                              {formatDuration(milestone.startDate, milestone.endDate)}
-                            </span>
-                          )}
-                          {milestone.workArrangement && (
-                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
-                              {getArrangementLabel(milestone.workArrangement)}
-                            </span>
-                          )}
+                        {/* Title Section - Always visible, clickable */}
+                        <div 
+                          className={`group ${showAll ? '' : 'cursor-pointer'}`}
+                          onClick={() => toggleMilestone(index)}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 flex-wrap flex-1">
+                              <span className="text-xs font-bold text-sky-500 dark:text-sky-400">
+                                {milestone.type === 'work' 
+                                  ? formatDateRange(milestone.startDate, milestone.endDate)
+                                  : milestone.startDate.getFullYear()
+                                }
+                              </span>
+                              {milestone.type === 'work' && (
+                                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900/50 text-sky-600 dark:text-sky-400">
+                                  {formatDuration(milestone.startDate, milestone.endDate)}
+                                </span>
+                              )}
+                              {milestone.workArrangement && (
+                                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+                                  {getArrangementLabel(milestone.workArrangement)}
+                                </span>
+                              )}
+                            </div>
+                            {/* Expand arrow - only visible on hover, hidden when showAll */}
+                            {!showAll && (
+                              <FontAwesomeIcon
+                                icon={faChevronDown}
+                                className={`text-xs text-gray-400 transition-all duration-300 opacity-0 group-hover:opacity-100 ${
+                                  expandedMilestone === index ? 'rotate-180' : ''
+                                }`}
+                              />
+                            )}
+                          </div>
+                          
+                          <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
+                            {milestone.type === 'work' ? milestone.subtitle : milestone.title}
+                          </h3>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {milestone.type === 'work' ? milestone.title : milestone.subtitle}
+                          </p>
                         </div>
-                        <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 uppercase tracking-wide">
-                          {milestone.type === 'work' ? milestone.subtitle : milestone.title}
-                        </h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {milestone.type === 'work' ? milestone.title : milestone.subtitle}
-                        </p>
-                        <p className="mt-2 text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                          {milestone.description}
-                        </p>
+                        
+                        {/* Expanded Description */}
+                        <div
+                          className={`overflow-hidden transition-all duration-300 ease-out ${
+                            showAll || expandedMilestone === index ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'
+                          }`}
+                        >
+                          <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                            {milestone.description}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   );

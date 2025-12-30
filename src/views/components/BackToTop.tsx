@@ -31,8 +31,8 @@ const BackToTop = () => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 z-[9000] w-12 h-12 rounded-full 
-        bg-white/60 dark:bg-slate-800/60 backdrop-blur-md
+      className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-[9000] w-12 h-12 rounded-full 
+        bg-white/40 dark:bg-slate-800/40 backdrop-blur-md
         border border-white/30 dark:border-slate-600/30
         text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300
         shadow-lg shadow-black/5 dark:shadow-black/20

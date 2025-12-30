@@ -33,7 +33,7 @@ export const useHeroStats = () => {
         years: Math.floor(diffYears * 10) / 10,
         hours,
         companies: companyCount,
-        projects: 10,
+        projects: 8,
       });
     };
 

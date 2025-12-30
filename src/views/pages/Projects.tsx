@@ -29,15 +29,15 @@ const Projects = () => {
             <h1 className="md:text-6xl text-4xl font-light tracking-tight text-gray-800 dark:text-gray-200">Projects</h1>
           </div>
           
-          {/* See All Button - visible on header hover */}
+          {/* See All Button - Mobile always visible, Desktop on hover */}
           <button
             onClick={toggleShowAll}
-            className="hidden md:flex items-center gap-2 text-xs text-gray-400 hover:text-sky-500 transition-all duration-300 mb-2 opacity-0 group-hover/header:opacity-100 -translate-x-2 group-hover/header:translate-x-0"
+            className="flex md:flex items-center gap-2 text-xs text-gray-400 hover:text-sky-500 transition-all duration-300 mb-2 md:opacity-0 md:group-hover/header:opacity-100 md:-translate-x-2 md:group-hover/header:translate-x-0"
           >
             <span>{showAll ? 'Collapse' : 'Expand All'}</span>
-            <FontAwesomeIcon 
-              icon={faChevronDown} 
-              className={`text-[10px] transition-transform duration-300 ${showAll ? 'rotate-180' : 'rotate-0'}`} 
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className={`text-[10px] transition-transform duration-300 ${showAll ? 'rotate-180' : 'rotate-0'}`}
             />
           </button>
         </div>

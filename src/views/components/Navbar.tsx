@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { faSearch, faBars, faXmark, faDownload, faWandMagicSparkles, faRoute, faBriefcase, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faBars, faXmark, faDownload, faWandMagicSparkles, faRoute, faBriefcase, faEnvelope, faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NavBarProps {
@@ -42,20 +42,23 @@ const NavBar = ({ onSearchClick, onCursorSettingsClick }: NavBarProps) => {
   const navLinks = [
     { href: '#experiences', label: 'Journey', icon: faRoute },
     { href: '#projects', label: 'Projects', icon: faBriefcase },
+    { href: '#technologies', label: 'Tech Stack', icon: faCode },
     { href: '#reach-out', label: 'Connect', icon: faEnvelope },
   ];
 
   return (
     <>
-      {/* Fixed Mobile Sticky Bar - Only visible when scrolled on mobile */}
-      <div
-        className={`fixed top-0 left-0 right-0 z-[9997] md:hidden transition-all duration-300 ${
-          isAtTop ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100 translate-y-0'
-        }`}
-      >
-        <div className="relative flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-slate-900/90 via-slate-950/90 to-gray-900/90 backdrop-blur-xl shadow-lg shadow-black/20">
+      {/* Fixed Mobile Sticky Bar - Always visible on mobile */}
+      <div className="fixed top-0 left-0 right-0 z-[9997] md:hidden">
+        <div className={`relative flex items-center gap-3 px-4 py-2 transition-all duration-300 ${
+          isAtTop 
+            ? '' 
+            : 'bg-[#0d1320]/80 backdrop-blur-lg'
+        }`}>
           {/* Fading bottom border */}
-          <div className="absolute bottom-0 left-[15%] right-[15%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className={`absolute bottom-0 left-[15%] right-[15%] h-px bg-gradient-to-r from-transparent via-white/10 to-transparent transition-opacity duration-300 ${
+            isAtTop ? 'opacity-0' : 'opacity-0'
+          }`} />
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 text-gray-400 hover:text-sky-500 transition-colors"
@@ -74,10 +77,8 @@ const NavBar = ({ onSearchClick, onCursorSettingsClick }: NavBarProps) => {
         </div>
       </div>
 
-      {/* Main Navigation - Desktop always, Mobile only when at top */}
-      <div className={`w-full lg:justify-between justify-center transition-all duration-300 ${
-        isAtTop ? 'flex' : 'hidden md:flex'
-      }`}>
+      {/* Main Navigation - Desktop only */}
+      <div className="w-full lg:justify-between justify-center hidden md:flex">
         <section className="relative w-full">
           <nav className="flex w-full items-center justify-between">
             <div className="px-4 xl:px-12 py-4 md:py-6 flex w-full items-center justify-between gap-4">
