@@ -2,6 +2,30 @@
   command = "npm run build"
   publish = "out"
 
+[build.environment]
+  # Enable Next.js build caching
+  NEXT_PRIVATE_STANDALONE = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
 # Serve static assets from _next directory
 [[headers]]
   for = "/_next/static/*"
