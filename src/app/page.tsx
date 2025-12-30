@@ -1,3 +1,5 @@
+'use client';
+
 import { Hero, Experiences, Projects, Technologies, ReachOut } from '@/views/pages';
 import { CustomCursor, CommandPalette, BackToTop, InteractiveRain, CursorSettingsDialog } from '@/views/components';
 import { CursorSettingsProvider, useCursorSettings } from '@/contexts/CursorSettingsContext';
@@ -65,7 +67,7 @@ function AppContent() {
   );
 }
 
-function App() {
+export default function Home() {
   return (
     <CursorSettingsProvider>
       <AppContent />
@@ -73,4 +75,3 @@ function App() {
   );
 }
 
-export default App;

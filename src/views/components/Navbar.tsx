@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { faSearch, faBars, faXmark, faDownload, faWandMagicSparkles, faRoute, faBriefcase, faEnvelope, faCode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

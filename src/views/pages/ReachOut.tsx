@@ -1,3 +1,5 @@
+'use client';
+
 import { useContact } from '@/viewmodels';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +15,7 @@ const ReachOut = () => {
         {/* Header */}
         <div className="px-8 md:px-20">
           <span className="text-sm uppercase tracking-widest text-sky-500 font-medium">Get In Touch</span>
-          <h1 className="md:text-6xl text-4xl font-light tracking-tight text-gray-800 dark:text-gray-200">Let's Connect</h1>
+          <h1 className="md:text-6xl text-4xl font-light tracking-tight text-gray-800 dark:text-gray-200">Let&apos;s Connect</h1>
           <div className="flex items-center gap-3 mt-3">
             <div className="w-12 h-0.5 bg-gradient-to-r from-sky-400 to-cyan-400" />
             <p className="text-xs text-gray-400">Open for opportunities</p>

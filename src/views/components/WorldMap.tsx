@@ -1,3 +1,5 @@
+'use client';
+
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 import { useWorldMap } from '@/viewmodels/useWorldMap';
 import { Location } from '@/models/location.model';

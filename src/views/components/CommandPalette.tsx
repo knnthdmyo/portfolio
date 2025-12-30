@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faXmark, faBriefcase, faCode, faFolder, faEnvelope, faArrowRight, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -291,7 +293,7 @@ const CommandPalette = () => {
             </div>
           ) : query && (
             <div className="p-8 text-center text-gray-500">
-              <p>No results found for "{query}"</p>
+              <p>No results found for &ldquo;{query}&rdquo;</p>
             </div>
           )}
         </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useExperiences } from '@/viewmodels';
 import { MilestoneType } from '@/models';
@@ -283,7 +285,7 @@ const Experiences = () => {
             className="group flex items-center justify-center gap-3 py-4 px-8 mx-auto w-fit rounded-full bg-gradient-to-r from-sky-500/10 to-emerald-500/10 border border-sky-500/20 hover:border-sky-500/40 hover:from-sky-500/20 hover:to-emerald-500/20 transition-all duration-300"
           >
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              What's next? <span className="text-sky-500 font-semibold">Let's build something together</span>
+              What&apos;s next? <span className="text-sky-500 font-semibold">Let&apos;s build something together</span>
             </span>
             <FontAwesomeIcon 
               icon={faArrowRight} 

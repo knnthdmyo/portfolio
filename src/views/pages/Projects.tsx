@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useProjects } from '@/viewmodels';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

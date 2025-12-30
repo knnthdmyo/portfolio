@@ -1,3 +1,5 @@
+'use client';
+
 import { useTechnologies } from '@/viewmodels';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { CursorSettings } from '../views/components/CursorSettingsDialog';
 

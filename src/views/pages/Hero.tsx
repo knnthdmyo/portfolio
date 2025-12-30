@@ -1,3 +1,5 @@
+'use client';
+
 import { useHeroStats } from '@/viewmodels';
 import NavBar from '@/views/components/Navbar';
 import WorldMap from '@/views/components/WorldMap';
