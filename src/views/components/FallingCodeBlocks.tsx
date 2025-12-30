@@ -65,7 +65,7 @@ export default function FallingCodeBlocks({ onLogoHit }: FallingCodeBlocksProps)
         return prevBlocks
           .map((block) => {
             let newX = block.x + block.speedX;
-            let newY = block.y + block.speedY;
+            const newY = block.y + block.speedY;
             let newSpeedX = block.speedX;
             let newSpeedY = block.speedY;
             let newRotation = block.rotation + block.rotationSpeed;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useProjects } from '@/viewmodels';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -100,11 +101,14 @@ const Projects = () => {
             >
               <div className="md:ml-[88px] rounded-xl overflow-hidden">
                 {project.image ? (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full max-w-2xl h-64 md:h-80 object-cover rounded-xl"
-                  />
+                  <div className="relative w-full max-w-2xl h-64 md:h-80 rounded-xl overflow-hidden">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                 ) : (
                   <div className="w-full max-w-2xl h-64 md:h-80 flex flex-col items-center justify-center gap-3 text-gray-500 bg-gray-100 dark:bg-gray-800/30 rounded-xl">
                     <FontAwesomeIcon icon={faImage} className="text-4xl" />
