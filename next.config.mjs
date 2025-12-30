@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // For static export (GitHub Pages compatible)
+  output: 'export', // For static export
   images: {
     unoptimized: true, // Required for static export
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/portfolio' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/portfolio' : '',
+  // Only use basePath for GitHub Pages deployment
+  // Remove or comment out for Netlify/Vercel
+  // basePath: process.env.GITHUB_PAGES ? '/portfolio' : '',
+  // assetPrefix: process.env.GITHUB_PAGES ? '/portfolio' : '',
   trailingSlash: true,
 };
 
