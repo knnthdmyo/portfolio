@@ -4,10 +4,6 @@ const nextConfig = {
   images: {
     unoptimized: true, // Required for static export
   },
-  // Only use basePath for GitHub Pages deployment
-  // Remove or comment out for Netlify/Vercel
-  basePath: '/portfolio',
-  assetPrefix: '/portfolio/',
   trailingSlash: true,
   
   // Enable build caching and optimization
