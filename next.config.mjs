@@ -6,8 +6,8 @@ const nextConfig = {
   },
   // Only use basePath for GitHub Pages deployment
   // Remove or comment out for Netlify/Vercel
-  // basePath: process.env.GITHUB_PAGES ? '/portfolio' : '',
-  // assetPrefix: process.env.GITHUB_PAGES ? '/portfolio' : '',
+  basePath: '/portfolio',
+  assetPrefix: '/portfolio/',
   trailingSlash: true,
   
   // Enable build caching and optimization
