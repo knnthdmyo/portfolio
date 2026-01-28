@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { WorkExperience, Milestone } from '@/models';
 
 // Static data - in a real app, this could come from an API
@@ -5,7 +6,7 @@ const EXPERIENCES_DATA: WorkExperience[] = [
   {
     company: "SNSoft Technologies Inc.",
     role: "Frontend Developer",
-    startDate: new Date(2025, 1, 1),  // February 2025
+    startDate: dayjs('2025-02-01').toDate(),  // February 2025
     endDate: null,                     // Present
     employmentType: "fulltime",
     workArrangement: "onsite",
@@ -15,8 +16,8 @@ const EXPERIENCES_DATA: WorkExperience[] = [
   {
     company: "Performativ UK",
     role: "Frontend Developer",
-    startDate: new Date(2021, 10, 1), // November 2021
-    endDate: new Date(2024, 8, 1),    // September 2024
+    startDate: dayjs('2021-11-01').toDate(), // November 2021
+    endDate: dayjs('2024-09-01').toDate(),    // September 2024
     employmentType: "fulltime",
     workArrangement: "remote",
     description:
@@ -25,8 +26,8 @@ const EXPERIENCES_DATA: WorkExperience[] = [
   {
     company: "Extendops BPO",
     role: "Fullstack Developer",
-    startDate: new Date(2020, 9, 1),  // October 2020
-    endDate: new Date(2022, 0, 1),    // January 2022
+    startDate: dayjs('2020-10-01').toDate(),  // October 2020
+    endDate: dayjs('2022-01-01').toDate(),    // January 2022
     employmentType: "fulltime",
     workArrangement: "hybrid",
     description:
@@ -35,8 +36,8 @@ const EXPERIENCES_DATA: WorkExperience[] = [
   {
     company: "Stacktrek Enterprise Inc.",
     role: "Junior Software Developer",
-    startDate: new Date(2019, 2, 1), // March 2019
-    endDate: new Date(2020, 9, 1),   // October 2020
+    startDate: dayjs('2019-03-01').toDate(), // March 2019
+    endDate: dayjs('2020-10-01').toDate(),   // October 2020
     employmentType: "fulltime",
     workArrangement: "onsite",
     description:
@@ -49,8 +50,8 @@ const EDUCATION_MILESTONES: Milestone[] = [
     type: 'achievement',
     title: 'StackLeague',
     subtitle: 'Coding Tournament',
-    startDate: new Date(2019, 1, 1), // February 2019
-    endDate: new Date(2019, 1, 1),   // February 2019
+    startDate: dayjs('2019-02-01').toDate(), // February 2019
+    endDate: dayjs('2019-02-01').toDate(),   // February 2019
     description: 'Participated and passed the StackLeague coding tournament, a competitive programming competition that opened doors to my first professional opportunity.',
   },
 ];

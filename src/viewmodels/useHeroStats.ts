@@ -1,7 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
+import dayjs from 'dayjs';
 import { ExperienceService } from '@/services';
 
-const CAREER_START = new Date('2019-03-19');
+const CAREER_START = dayjs('2019-03-19');
+const VACANT_START = dayjs('2024-10-01');
+const VACANT_END = dayjs('2025-01-01');
 const HOURS_PER_WEEK = 45; // Average of 40-50 hrs/week
 
 interface HeroStats {
@@ -23,10 +26,14 @@ export const useHeroStats = () => {
 
   useEffect(() => {
     const calculateStats = () => {
-      const now = new Date();
-      const diffMs = now.getTime() - CAREER_START.getTime();
-      const diffYears = diffMs / (1000 * 60 * 60 * 24 * 365.25);
-      const diffWeeks = diffMs / (1000 * 60 * 60 * 24 * 7);
+      const now = dayjs();
+      const totalYears = now.diff(CAREER_START, 'year', true);
+      const gapYears = VACANT_END.diff(VACANT_START, 'year', true);
+      const diffYears = totalYears - gapYears;
+      
+      const totalWeeks = now.diff(CAREER_START, 'week', true);
+      const gapWeeks = VACANT_END.diff(VACANT_START, 'week', true);
+      const diffWeeks = totalWeeks - gapWeeks;
       const hours = Math.floor(diffWeeks * HOURS_PER_WEEK);
 
       setStats({

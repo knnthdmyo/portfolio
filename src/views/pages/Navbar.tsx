@@ -8,7 +8,7 @@ interface NavBarProps {
   onSearchClick?: () => void;
 }
 
-const CV_LINK = 'https://drive.google.com/uc?export=download&id=1BwI5OSUnxb8c8usowPTB-DQKRDB79RC8';
+const CV_LINK = 'https://drive.google.com/file/d/1BwI5OSUnxb8c8usowPTB-DQKRDB79RC8/view?usp=sharing';
 
 const NavBar = ({ onSearchClick }: NavBarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -98,7 +98,8 @@ const NavBar = ({ onSearchClick }: NavBarProps) => {
                 <li className="hidden sm:block">
                   <a 
                     href={CV_LINK}
-                    download="Kenneth_Resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 text-sky-500 hover:text-sky-400 transition-colors duration-300"
                   >
                     <FontAwesomeIcon icon={faDownload} className="text-xs" />
@@ -208,7 +209,8 @@ const NavBar = ({ onSearchClick }: NavBarProps) => {
               <li className="mt-2 pt-2 border-t border-white/5">
                 <a 
                   href={CV_LINK}
-                  download="Kenneth_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={closeMobileMenu}
                   className="flex items-center gap-3 py-3 px-4 text-sm uppercase tracking-widest font-medium text-sky-400 hover:text-sky-300 hover:bg-sky-500/10 rounded-lg transition-all duration-300"
                 >

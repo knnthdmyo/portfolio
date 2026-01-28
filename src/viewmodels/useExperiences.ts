@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import dayjs from 'dayjs';
 import { Milestone, WorkArrangement } from '@/models';
 import { ExperienceService } from '@/services';
 
@@ -24,12 +25,9 @@ export const useExperiences = () => {
       }
       
       // Gap is from current's end to next's start (work experiences only)
-      const currentEnd = current.endDate || new Date();
-      const nextStart = next.startDate;
-      const monthsGap = Math.max(1, 
-        (nextStart.getFullYear() - currentEnd.getFullYear()) * 12 + 
-        (nextStart.getMonth() - currentEnd.getMonth())
-      );
+      const currentEnd = current.endDate ? dayjs(current.endDate) : dayjs();
+      const nextStart = dayjs(next.startDate);
+      const monthsGap = Math.max(1, nextStart.diff(currentEnd, 'month'));
       weights.push(monthsGap);
     }
     return weights;
@@ -52,15 +50,15 @@ export const useExperiences = () => {
   };
 
   const formatDateRange = (start: Date, end: Date | null): string => {
-    const startYear = start.getFullYear();
-    const endYear = end ? end.getFullYear() : null;
+    const startYear = dayjs(start).year();
+    const endYear = end ? dayjs(end).year() : null;
     if (!endYear || startYear === endYear) return `${startYear}`;
     return `${startYear} - ${endYear}`;
   };
 
   const formatDuration = (start: Date, end: Date | null): string => {
-    const endDate = end || new Date();
-    const months = (endDate.getFullYear() - start.getFullYear()) * 12 + (endDate.getMonth() - start.getMonth());
+    const endDate = end ? dayjs(end) : dayjs();
+    const months = endDate.diff(dayjs(start), 'month');
     const years = Math.floor(months / 12);
     const remainingMonths = months % 12;
     if (years === 0) return `${remainingMonths}mo`;

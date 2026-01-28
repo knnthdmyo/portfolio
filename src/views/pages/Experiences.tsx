@@ -1,5 +1,6 @@
 'use client';
 
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useExperiences } from '@/viewmodels';
 import { MilestoneType } from '@/models';
@@ -104,7 +105,7 @@ const Experiences = () => {
                         <span className="text-xs font-bold text-sky-500 dark:text-sky-400">
                           {milestone.type === 'work' 
                             ? formatDateRange(milestone.startDate, milestone.endDate)
-                            : milestone.startDate.getFullYear()
+                            : dayjs(milestone.startDate).year()
                           }
                         </span>
                       </div>
@@ -180,7 +181,7 @@ const Experiences = () => {
                               <span className="text-xs font-bold text-sky-500 dark:text-sky-400">
                                 {milestone.type === 'work' 
                                   ? formatDateRange(milestone.startDate, milestone.endDate)
-                                  : milestone.startDate.getFullYear()
+                                  : dayjs(milestone.startDate).year()
                                 }
                               </span>
                               {milestone.type === 'work' && (
